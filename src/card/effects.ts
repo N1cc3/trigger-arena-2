@@ -4,6 +4,7 @@ export const EFFECT_LIST = [
 	{
 		id: 'damage',
 		text: (power: number) => `Damage ${power}`,
+		weight: 5,
 		applyEffect: (targets: Player[], power: number) => {
 			targets.forEach((t) => (t.health -= power))
 		},
@@ -11,6 +12,7 @@ export const EFFECT_LIST = [
 	{
 		id: 'heal',
 		text: (power: number) => `Heal ${power}`,
+		weight: 3,
 		applyEffect: (targets: Player[], power: number) => {
 			targets.forEach((t) => (t.health -= power))
 		},
