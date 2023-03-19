@@ -1,19 +1,25 @@
 import { Player } from '../game'
 
-export type EffectId = 'damage'
-
-export type EffectType = Readonly<{
-	id: EffectId
-	text: (power: number) => string
-	applyEffect: (targets: Player[], power: number) => void
-}>
-
-export const EFFECTS: readonly EffectType[] = [
+export const EFFECT_LIST = [
 	{
 		id: 'damage',
-		text: (power) => `Damage ${power}`,
-		applyEffect: (targets, power) => {
+		text: (power: number) => `Damage ${power}`,
+		applyEffect: (targets: Player[], power: number) => {
 			targets.forEach((t) => (t.health -= power))
 		},
 	},
-]
+	{
+		id: 'heal',
+		text: (power: number) => `Heal ${power}`,
+		applyEffect: (targets: Player[], power: number) => {
+			targets.forEach((t) => (t.health -= power))
+		},
+	},
+] as const
+
+export type EffectType = (typeof EFFECT_LIST)[number]
+
+export const EFFECTS = EFFECT_LIST.reduce(
+	(acc, curr) => ({ ...acc, [curr.id]: curr }),
+	{} as { [id in EffectType['id']]: EffectType }
+)

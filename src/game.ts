@@ -1,11 +1,11 @@
-import { EffectId, EffectType } from './card/effects'
+import { EffectType } from './card/effects'
 import { TargetType } from './card/targets'
 import { TriggerType } from './card/triggers'
 
 export type Game = {
 	id: string
 	players: Player[]
-	cards: OwnedTriggerCard[]
+	cards: OwnedCard[]
 	hands: { [playerIdx: number]: Card[] }
 	turn: number
 	events: Event[]
@@ -18,39 +18,28 @@ export type Player = {
 }
 
 export type Event = {
-	effectId: EffectId
+	card: Card
 	targetIdxs: number[]
 }
 
-export type TriggerCard = {
-	type: 'trigger'
-	trigger: Trigger
-	target: Target
-	effect: Effect
-	boosts: Effect[]
-	health: number
+export type Card = {
+	trigger: TriggerType
+	target: TargetType
+	effect: EffectType & Powered
 }
 
-export type OwnedTriggerCard = TriggerCard & { ownerIdx: number }
-export type EffectfulCard = TriggerCard | { type: 'instant'; target: Target; effect: Effect }
-export type Card = EffectfulCard | { type: 'boost'; boost: Effect; targetCardIdx: number }
-
+export type OwnedCard = Card & { ownerIdx: number }
 export type Powered = { power: number }
-export type Trigger = TriggerType & Powered
-export type Target = TargetType & Powered
-export type Effect = EffectType & Powered
-
 export type Action = { use: number; discard: number; target?: number }
 
 export const simulate = (game: Game, action: Action) => {
 	game.events = []
-	const triggered: EffectfulCard[] = []
+	const triggered: Card[] = []
 	const currentPlayerIdx = game.turn % game.players.length
 	const currentPlayer = game.players[currentPlayerIdx]
 	const usedCard = game.hands[currentPlayerIdx][action.use]
 
-	if (usedCard.type === 'instant') triggered.push(usedCard)
-	if (usedCard.type === 'boost') game.cards[usedCard.targetCardIdx].boosts.push(usedCard.boost)
+	if (usedCard.trigger.id === 'instant') triggered.push(usedCard)
 
 	let triggeredIdx = 0
 	while (triggeredIdx < triggered.length) {
@@ -59,7 +48,7 @@ export const simulate = (game: Game, action: Action) => {
 		card.effect.applyEffect(targets, card.effect.power)
 
 		game.events.push({
-			effectId: card.effect.id,
+			card,
 			targetIdxs: targets.map((t) => game.players.indexOf(t)),
 		})
 

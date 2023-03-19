@@ -5,4 +5,4 @@
  * 12.5%  3
  * ...
  */
-export const randomPower = () => Math.floor(Math.log2(1 / Math.random()) + 1)
+export const randomDiminishing = () => Math.floor(Math.log2(1 / Math.random()) + 1)
