@@ -3,17 +3,32 @@ import { theme } from './theme'
 import { ThemeProvider, Box, useTheme } from '@mui/material'
 import { ComponentProps } from 'react'
 import { css, Global, keyframes } from '@emotion/react'
+import scratches from './assets/scratches.jpg'
+import phaser3 from './assets/phaser3-logo.png'
 
 export const MainMenu = () => {
 	return (
 		<ThemeProvider theme={theme}>
-			<VBox sx={{ overflow: 'hidden', bgcolor: 'primary.main' }}>
-				<Stripes />
-				<HBox>
-					<Triangle onClick={() => alert('host')}>Host</Triangle>
-					<Triangle onClick={() => alert('join')}>Join</Triangle>
-				</HBox>
-				<Stripes reverse />
+			<VBox
+				sx={{
+					bgcolor: 'black',
+				}}
+			>
+				<VBox
+					sx={{
+						overflow: 'hidden',
+						bgcolor: 'primary.main',
+						maskImage: `url('${phaser3}')`,
+						maskSize: '100% 100%',
+					}}
+				>
+					<Stripes />
+					<HBox>
+						<Triangle onClick={() => alert('host')}>Host</Triangle>
+						<Triangle onClick={() => alert('join')}>Join</Triangle>
+					</HBox>
+					<Stripes reverse />
+				</VBox>
 			</VBox>
 		</ThemeProvider>
 	)
