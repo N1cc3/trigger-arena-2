@@ -15,3 +15,8 @@ body {
 	height: 100%;
 	position: absolute;
 }
+
+@font-face {
+	font-family: 'WarElite';
+	src: local('WarElite'), url(@/assets/WarElite.ttf) format('truetype');
+}

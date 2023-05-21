@@ -4,7 +4,6 @@ import viteLogo from './assets/vite.svg'
 import './App.css'
 import { HostedGame } from '../../src/server'
 import { MsgIn, MsgOut } from '../../src/server'
-import { GameMsgIn, GameMsgOut } from '../../src/game'
 
 const url = import.meta.env.DEV ? 'ws://localhost:3000/' : `ws://${window.location.host}`
 const ws = new WebSocket(url)

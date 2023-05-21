@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite'
 import replace from '@rollup/plugin-replace'
 import react from '@vitejs/plugin-react'
+import path from 'path'
 
 export default defineConfig({
 	plugins: [react()],
@@ -17,6 +18,12 @@ export default defineConfig({
 					'typeof FEATURE_SOUND': "'true'",
 				}),
 			],
+		},
+		assetsInlineLimit: 0,
+	},
+	resolve: {
+		alias: {
+			'@': path.resolve(__dirname, 'src'),
 		},
 	},
 })

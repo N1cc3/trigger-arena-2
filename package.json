@@ -3,7 +3,7 @@
 	"version": "1.0.0",
 	"description": "Template for making a multiplayer browser game",
 	"scripts": {
-		"start": "nodemon ./src/game.ts",
+		"start": "nodemon ./src/newgame.ts",
 		"production": "NODE_ENV=production ts-node ./src/game.ts",
 		"test": "jest"
 	},
